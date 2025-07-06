@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Card</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 350px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        }
+
+        .product-image img {
+            width: 70%;
+            height: 70%;
+            object-fit: cover;
+            border-radius: 15px;
+            z-index: 1;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-placeholder {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .product-content {
+            padding: 25px;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .product-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .product-price {
+            font-size: 28px;
+            font-weight: 800;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .original-price {
+            font-size: 18px;
+            color: #a0aec0;
+            text-decoration: line-through;
+            font-weight: 400;
+        }
+
+        .product-description {
+            color: #718096;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .product-features {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .feature-tag {
+            background: #e2e8f0;
+            color: #4a5568;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .buy-button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .buy-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .buy-button:hover::before {
+            left: 100%;
+        }
+
+        .buy-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .buy-button:active {
+            transform: translateY(0);
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .stars {
+            color: #fbbf24;
+            font-size: 14px;
+        }
+
+        .rating-text {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .product-card {
+                max-width: 100%;
+                margin: 10px;
+            }
+            
+            .product-content {
+                padding: 20px;
+            }
+            
+            .product-name {
+                font-size: 20px;
+            }
+            
+            .product-price {
+                font-size: 24px;
+            }
+            
+            .product-image {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .product-image {
+                height: 220px;
+            }
+            
+            .product-content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="product-card">
+        <div class="product-badge">New</div>
+        <div class="product-image">
+            <div class="product-placeholder">📱</div>
+        </div>
+        <div class="product-content">
+            <h2 class="product-name">Wireless Headphones Pro</h2>
+            <div class="rating">
+                <div class="stars">★★★★★</div>
+                <span class="rating-text">(4.8) 256 reviews</span>
+            </div>
+            <div class="product-price">
+                $129.99
+                <span class="original-price">$199.99</span>
+            </div>
+            <div class="product-features">
+                <span class="feature-tag">Bluetooth 5.0</span>
+                <span class="feature-tag">30h Battery</span>
+                <span class="feature-tag">Noise Cancelling</span>
+            </div>
+            <p class="product-description">
+                Experience premium sound quality with our latest wireless headphones featuring advanced noise cancellation technology and exceptional battery life.
+            </p>
+            <button class="buy-button">Buy Now</button>
+        </div>
+    </div>
+</body>
+</html>
